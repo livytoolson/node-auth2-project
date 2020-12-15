@@ -25,8 +25,7 @@ const checkUsernameUnique = async (req, res, next) => {
 
 const checkUsernameExists = async (req, res, next) => {
     try {
-        let { username } = req.body
-        const rows = await User.findBy({ username: username })
+        const rows = await User.findBy({ username: req.body.username })
         if (rows) {
             req.userData = rows[0]
             next()

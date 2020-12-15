@@ -11,7 +11,8 @@ const { generateToken } = require('../utils/generate-token');
 
 router.post('/register', checkPayload, checkUsernameUnique, async (req, res) => {
     try {
-        const hash = bcrypt.hashSync(req.body.password, 10)
+        const rounds = process.env.BCRYPT_ROUNDS || 8
+        const hash = bcrypt.hashSync(req.body.password, parseInt(rounds))
         req.body.password = hash
         const newUser = await User.add({ username: req.body.username, password: hash })
         res.status(201).json(newUser)
@@ -27,7 +28,7 @@ router.post('/login', checkPayload, checkUsernameExists, (req, res) => {
         if (verifies) {
             const token = generateToken(req.userData)
             res.status(200).json({ 
-                message: `Welcome, ${req.userData.username}`, 
+                message: 'Welcome to our API, ' + req.userData.username, 
                 token
             })
         } else {
