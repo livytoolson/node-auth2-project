@@ -7,22 +7,34 @@ module.exports = {
     findById
 }
 
-function add(user) {
-    return db('users')
-    .insert(user, 'id')
-    .then((id) => {
-        return db('users').where({ id }).first()
-    })
-}
+// function add(user) {
+//     return db('users')
+//     .insert(user, 'id')
+//     .then((id) => {
+//         return db('users').where({ id }).first()
+//     })
+// }
+
+async function add(user) {
+    const [id] = await db('users').insert(user, 'id');
+    return findById(id);
+  }
 
 function findAll() {
-    return db('users').select('id', 'username', 'password').orderBy('id')
+    return db('users as u')
+    .select('u.id', 'u.username', 'u.department')
+    .orderBy('id')
 }
 
 function findBy(filter) {
-    return db('users').where(filter).orderBy('id')
+    return db('users')
+    .select('id', 'username', 'department')
+    .where(filter)
 }
 
 function findById(id) {
-    return db('users').where({ id }).first()
+    return db('users')
+    .select('id', 'username', 'department')
+    .where({ id })
+    .first()
 }

@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const router = require('express').Router();
-const jwt = require('jsonwebtoken');
 const User = require('../users/users-model');
 const { 
     checkPayload, 
@@ -38,9 +37,5 @@ router.post('/login', checkPayload, checkUsernameExists, (req, res) => {
         res.status(500).json({ message: error.message })
     }
 });
-
-router.get('/logout', (req, res) => {
-    
-})
 
 module.exports = router;
