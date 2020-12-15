@@ -1,6 +1,6 @@
 const User = require('./users-model');
 const router = require('express').Router();
-const { restricted } = require('../middlewares/restrict-middleware');
+const restricted = require('../middlewares/restricted-middleware');
 
 router.get('/', restricted, (req, res) => {
     User.findAll()

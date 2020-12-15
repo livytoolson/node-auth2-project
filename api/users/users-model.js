@@ -9,14 +9,14 @@ module.exports = {
 
 function add(user) {
     return db('users')
-    .insert(user)
+    .insert(user, 'id')
     .then((id) => {
         return db('users').where({ id }).first()
     })
 }
 
 function findAll() {
-    return db('users').select('*').orderBy('id')
+    return db('users').select('id', 'username', 'password').orderBy('id')
 }
 
 function findBy(filter) {
