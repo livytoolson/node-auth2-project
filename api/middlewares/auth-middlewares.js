@@ -1,7 +1,8 @@
 const User = require('../users/users-model');
 
 const checkPayload = (req, res, next) => {
-    if (!req.body.username || !req.body.password) {
+    let { username, password } = req.body
+    if (!username || !password) {
         res.status(401).json('Username and password are required')
     } else {
         next()
@@ -10,7 +11,8 @@ const checkPayload = (req, res, next) => {
 
 const checkUsernameUnique = async (req, res, next) => {
     try {
-        const rows = await User.findBy({ username: req.body.username })
+        let { username } = req.body
+        const rows = await User.findBy({ username: username })
         if (!rows.length) {
             next()
         } else {
@@ -23,7 +25,8 @@ const checkUsernameUnique = async (req, res, next) => {
 
 const checkUsernameExists = async (req, res, next) => {
     try {
-        const rows = await User.findBy({ username: req.body.username })
+        let { username } = req.body
+        const rows = await User.findBy({ username: username })
         if (rows) {
             req.userData = rows[0]
             next()

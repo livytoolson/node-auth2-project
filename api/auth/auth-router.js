@@ -4,7 +4,7 @@ const User = require('./users-model');
 const { checkPayload, checkUsernameUnique, checkUsernameExists } = require('../middlewares/auth-middlewares');
 
 router.post('/register', checkPayload, checkUsernameUnique, async (req, res) => {
-    let { user } = req.body
+    let user = req.body
     try {
         const hash = bcrypt.hashSync(user.password, 12)
         const newUser = await User.add({ 
