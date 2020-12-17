@@ -16,7 +16,7 @@ const checkUsernameUnique = async (req, res, next) => {
         if (!rows.length) {
             next()
         } else {
-            res.status(401).json('Username is not unique. Please choose a different one.')
+            res.status(401).json('Username is not unique, please choose a different one')
         }
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -30,7 +30,7 @@ const checkUsernameExists = async (req, res, next) => {
             req.userData = rows[0]
             next()
         } else {
-            res.status(401).json('Username does not exist.')
+            res.status(401).json('Username does not exist')
         }
     } catch (error) {
         res.status(500).json({ message: error.message })
